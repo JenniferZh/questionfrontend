@@ -1,6 +1,7 @@
 <template>
   <el-container>
-  <el-header>Header</el-header>
+  <el-header>
+  </el-header>
   <el-container>
     <el-aside width="200px">Aside</el-aside>
     <el-main>Main</el-main>
@@ -18,11 +19,15 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .el-header {
   background-color: #B3C0D1;
   color: #333;
   line-height: 60px;
+  div a {
+    float:right;
+  }
+
 }
 
 .el-aside {
