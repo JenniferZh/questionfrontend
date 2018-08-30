@@ -1,6 +1,6 @@
 <template>
     <el-table
-    :data="tableData"
+    :data="tabledata"
     :row-class-name="statusClass"
     height="800"
     border
@@ -13,7 +13,7 @@
     <el-table-column
       prop="name"
       label="名称"
-      width="200">
+      width="150">
     </el-table-column>
     <el-table-column
       prop="props"
@@ -40,11 +40,9 @@
 <script>
   export default {
     name: "Table",
-    
-    created: function() {
-        this.EventBus.$on("listenToMenuClick", function(data){
-            console.log("data"+data);
-        })
+
+    props: {
+      'tabledata': Array,
     },
 
     methods: {
@@ -67,27 +65,27 @@
 
     data() {
       return {
-        tableData: [{
-          code: 'SL-53.01.10.00.00',
-          name: '坝体',
-          props: '公路工程：坝体',
-          status: '错误',
-        }, {
-          code: 'SL-53.01.10.00.00',
-          name: '坝体2',
-          props: '公路工程：坝体',
-          status: '正确',
-        }, {
-          code: 'SL-53.01.10.00.00',
-          name: '坝体3',
-          props: '公路工程：坝体',
-          status: '错误',
-        }, {
-          code: 'SL-53.01.10.00.00',
-          name: '坝体4',
-          props: '公路工程：坝体',
-          status: '错误',
-        }]
+        // tableData: [{
+        //   code: 'SL-53.01.10.00.00',
+        //   name: '坝体',
+        //   props: '公路工程：坝体',
+        //   status: '错误',
+        // }, {
+        //   code: 'SL-53.01.10.00.00',
+        //   name: '坝体2',
+        //   props: '公路工程：坝体',
+        //   status: '正确',
+        // }, {
+        //   code: 'SL-53.01.10.00.00',
+        //   name: '坝体3',
+        //   props: '公路工程：坝体',
+        //   status: '错误',
+        // }, {
+        //   code: 'SL-53.01.10.00.00',
+        //   name: '坝体4',
+        //   props: '公路工程：坝体',
+        //   status: '错误',
+        // }]
       }
     }
   }

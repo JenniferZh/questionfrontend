@@ -1,9 +1,7 @@
 <template>
     <el-menu
       default-active="1"
-      class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose">
+      class="el-menu-vertical-demo">
 
         <el-menu-item v-for="item in entries" :key="item.index" :index=item.index @click="onMenuItemClick(item)">
             <i class="el-icon-menu"></i>
@@ -18,8 +16,8 @@ export default {
   name: 'NavMenu',
   methods: {
       onMenuItemClick: function (item) {
-          console.log(item);
-          this.EventBus.$emit("listenToMenuClick", {"id": item.name});
+        this.$emit('tableChange', item);
+          //console.log(item);
       }
   },
   data() {

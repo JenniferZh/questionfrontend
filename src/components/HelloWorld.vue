@@ -9,10 +9,10 @@
   </el-header>
   <el-container>
     <el-aside width="300px">
-      <NavMenu></NavMenu>
+      <NavMenu v-on:tableChange="updateTable"></NavMenu>
     </el-aside>
     <el-main>
-      <Table></Table>
+      <Table :tabledata="mdata"></Table>
     </el-main>
   </el-container>
 </el-container>
@@ -27,8 +27,46 @@ export default {
     NavMenu,
     Table,
   },
-  props: {
-    msg: String
+  methods: {
+    updateTable: function(item) {
+      this.mdata = [{
+        code: 'SL-53.01.10.00.00',
+        name: '坝体',
+        props: '公路工程：坝体',
+        status: '错误',
+      }, {
+        code: 'SL-53.01.10.00.00',
+        name: '坝体2',
+        props: '公路工程：坝体',
+        status: '正确',
+      }];
+      console.log("hear"+item.name);
+    }
+  },
+  data() {
+    return {
+      mdata: [{
+        code: 'SL-53.01.10.00.00',
+        name: '坝体',
+        props: '公路工程：坝体',
+        status: '错误',
+      }, {
+        code: 'SL-53.01.10.00.00',
+        name: '坝体2',
+        props: '公路工程：坝体',
+        status: '正确',
+      }, {
+        code: 'SL-53.01.10.00.00',
+        name: '坝体3',
+        props: '公路工程：坝体',
+        status: '错误',
+      }, {
+        code: 'SL-53.01.10.00.00',
+        name: '坝体4',
+        props: '公路工程：坝体',
+        status: '错误',
+      }]
+    }
   }
 }
 </script>
