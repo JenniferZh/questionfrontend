@@ -7,10 +7,8 @@ import './assets/css/reset.scss';
 
 Vue.use(ElementUI);
 
-var EventBus = new Vue();
 
 new Vue({
-  EventBus,
   router,
   render: h => h(App)
 }).$mount('#app');
