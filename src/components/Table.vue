@@ -16,17 +16,16 @@
       width="150">
     </el-table-column>
     <el-table-column
-      prop="props"
+      prop="link_full_name"
       label="相似属性"
       width="400">
     </el-table-column>
     <el-table-column
-      prop="status"
+      :formatter="formatStatus"
       label="状态"
       width="150">
     </el-table-column>
     <el-table-column
-      fixed="right"
       label="操作"
       width="150">
       <template slot-scope="scope">
@@ -47,46 +46,21 @@
 
     methods: {
       handleClickConfirm: function (row) {
-          row.status="正确"
+          row.status=1;
       },
       handleClickCancel: function (row) {
-          row.status="错误"
+          row.status=0;
       },
       statusClass: function({row}) {
-          if(row.status === "正确") return "right-row";
+          if(row.status === 1 ) return "right-row";
           else return "wrong-row";
       },
-      updateTableData: function(data)
-      {
-          console.log("hear"+data);
+      formatStatus: function(row, column, cellValue) {
+          var newStatus = row.status == 1? "已确认":"未确认";
+          return newStatus
       }
 
-    },
 
-    data() {
-      return {
-        // tableData: [{
-        //   code: 'SL-53.01.10.00.00',
-        //   name: '坝体',
-        //   props: '公路工程：坝体',
-        //   status: '错误',
-        // }, {
-        //   code: 'SL-53.01.10.00.00',
-        //   name: '坝体2',
-        //   props: '公路工程：坝体',
-        //   status: '正确',
-        // }, {
-        //   code: 'SL-53.01.10.00.00',
-        //   name: '坝体3',
-        //   props: '公路工程：坝体',
-        //   status: '错误',
-        // }, {
-        //   code: 'SL-53.01.10.00.00',
-        //   name: '坝体4',
-        //   props: '公路工程：坝体',
-        //   status: '错误',
-        // }]
-      }
     }
   }
 </script>
