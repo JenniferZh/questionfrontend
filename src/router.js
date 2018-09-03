@@ -5,6 +5,10 @@ import Login from './components/Login.vue'
 
 Vue.use(Router)
 
+function requireAuth( to, from , next) {
+
+}
+
 export default new Router({
   routes: [
     {

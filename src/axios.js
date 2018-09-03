@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'http://localhost:5000/api/',
@@ -14,5 +14,11 @@ export default {
         scope: data
       }
     })
+  },
+
+  postAddLink(data) {
+    return instance.post('/link/add', data);
   }
+
+
 }

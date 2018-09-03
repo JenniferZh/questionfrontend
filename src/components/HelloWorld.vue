@@ -13,29 +13,29 @@
     </el-aside>
     <el-main>
 
-      <el-button @click="dialogFormVisible = true" type="primary" icon="el-icon-circle-plus-outline" plain>增加关联</el-button>
+      <el-button @click="addLink" type="primary" icon="el-icon-circle-plus-outline" plain>增加关联</el-button>
       <el-dialog title="新建关联" :visible.sync="dialogFormVisible">
-      <el-form :model="form">
+      <el-form :model="ruleform" :rules="rules" ref="ruleform">
         <el-form-item label="本领域" :label-width="formLabelWidth">
-          <el-select v-model="form.region" disabled>
+          <el-select v-model="ruleform.region" disabled>
           </el-select>
         </el-form-item>
-        <el-form-item label="本领域构件名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name" auto-complete="off"></el-input>
+        <el-form-item label="本领域构件名称" :label-width="formLabelWidth" prop="name">
+          <el-input v-model="ruleform.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="关联领域" :label-width="formLabelWidth">
-          <el-select v-model="form.region2">
-            <el-option v-for="item in scopes" :label="item.name" :value="item.name"></el-option>
+        <el-form-item label="关联领域" :label-width="formLabelWidth" prop="region2">
+          <el-select v-model="ruleform.region2">
+            <el-option v-for="item in scopes" :label="item.name" :value="item.name" :key="item.name"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="关联构件名称" :label-width="formLabelWidth">
-          <el-input v-model="form.name2" auto-complete="off"></el-input>
+        <el-form-item label="关联构件名称" :label-width="formLabelWidth" prop="name2">
+          <el-input v-model="ruleform.name2" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('ruleform')">立即创建</el-button>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-      </div>
       </el-dialog>
       <Table :tabledata="mdata"></Table>
     </el-main>
@@ -55,18 +55,67 @@ export default {
   },
   methods: {
     updateTable: function(item) {
-      this.form.region = item.name;
+      this.ruleform.region = item.name;
       axiosapi.getTableData(item.name).then(response => (this.mdata = response.data));
+    },
+    addLink: function() {
+      this.dialogFormVisible = true;
+      //clear form
+      this.ruleform.name = '';
+      this.ruleform.name2 = '';
+      this.ruleform.region2 = '';
+    },
+    submitForm: function(formName) {
+      console.log(this.$refs[formName]);
+      this.$refs[formName].validate((valid) => {
+        console.log(valid);
+        if(valid) {
+          
+          this.dialogFormVisible = false;
+          let self = this;
+          axiosapi.postAddLink(this.ruleform).then(function(response){
+            if(response.data.code === '200') {
+              self.mdata.push(response.data.body);
+              self.$notify({
+                title: '成功',
+                message: '关联已增加',
+                type: 'success'
+              });
+            } else {
+              self.$notify({
+                title: '失败',
+                message: '输入不和要求',
+                type: 'error'
+              });
+            }
+          }).catch(function(error) {
+            self.$notify({
+              title: '失败',
+              message: '访问出错',
+              type: 'error'
+            });
+          });
+        } else {
+          return false;
+        }
+      });
+      
     }
   },
   data() {
     return {
       dialogFormVisible: false,
-      form: {
+      ruleform: {
           name: '',
           name2: '',
           region: '电网工程',
           region2: '',
+      },
+      rules: {
+          name:[{require:true, message:'请输入构件名称', trigger:'submit'},
+          { min: 1, max: 5, message: '长度在 3 到 5 个字符', trigger: 'submit' }],
+          region2:[{require:true, message:'请选择关联领域名称', trigger:'submit'}],
+          name2:[{require:true, message:'请输入关联构件名称', trigger:'submit'}],
       },
       scopes: [
         {

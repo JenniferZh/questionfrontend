@@ -55,7 +55,7 @@
           if(row.status === 1 ) return "right-row";
           else return "wrong-row";
       },
-      formatStatus: function(row, column, cellValue) {
+      formatStatus: function(row) {
           var newStatus = row.status == 1? "已确认":"未确认";
           return newStatus
       }
