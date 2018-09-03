@@ -6,14 +6,22 @@ import Login from './components/Login.vue'
 Vue.use(Router)
 
 function requireAuth( to, from , next) {
-
+  let token = sessionStorage.getItem('token')
+  if(token) {
+    next();
+  } else {
+    next({
+      path: '/login'
+    });
+  }
 }
 
 export default new Router({
   routes: [
     {
       path: '/',
-      component: HelloWorld
+      component: HelloWorld,
+      beforeEnter: requireAuth
     },
     {
       path: '/login',
