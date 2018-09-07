@@ -1,8 +1,8 @@
 <template lang="html">
   <div id="login">
     <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="name">
-        <el-input type="text" v-model="ruleForm2.name" auto-complete="off"></el-input>
+      <el-form-item label="用户名" prop="account">
+        <el-input type="text" v-model="ruleForm2.account" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="ruleForm2.password" auto-complete="off"></el-input>
@@ -16,25 +16,47 @@
 </template>
 
 <script>
+import axiosapi from "../axios.js";
 export default {
   name: 'Login',
   data() {
     return {
       ruleForm2: {
-        name:'',
+        account:'',
         password:''
       },
       rules2: {
-        name: [{ required: true, message: '请填写活动形式', trigger: 'blur' }],
-        password:[{ required: true, message: '请填写活动形式', trigger: 'blur' }]
+        account: [{ required: true, message: '请填写用户名', trigger: 'blur' }],
+        password:[{ required: true, message: '请填写密码', trigger: 'blur' }]
       }
     }
   },
   methods: {
       submitForm(formName) {
+          // var self = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+
+            //alert('submit!');
+            axiosapi.postLogin(this.ruleForm2).then((response)=>{
+                console.log(response)
+                if(response.data.body.pass) {
+                    // alert('true');
+                    console.log('response')
+                    localStorage.setItem("token", response.data.body.token);
+                    console.log(self);
+                    this.$router.push('/')
+                    console.log('response')
+                } else {
+                    alert('false');
+                }
+            }).catch(function(error){
+
+            })
+
+
+
+
           } else {
             return false;
           }

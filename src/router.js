@@ -6,7 +6,9 @@ import Login from './components/Login.vue'
 Vue.use(Router)
 
 function requireAuth( to, from , next) {
-  let token = sessionStorage.getItem('token')
+  let token = localStorage.getItem('token');
+  console.log(token);
+  console.log('+++++++++++++++++++++++++++++++++++++++++');
   if(token) {
     next();
   } else {

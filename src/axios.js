@@ -18,6 +18,10 @@ export default {
 
   postAddLink(data) {
     return instance.post('/link/add', data);
+    },
+
+  postLogin(data) {
+      return instance.post('/user/login', data);
   }
 
 
