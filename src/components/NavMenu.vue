@@ -14,53 +14,13 @@
 <script>
 export default {
   name: 'NavMenu',
+  props: {
+      'entries': Array,
+  },
   methods: {
       onMenuItemClick: function (item) {
         this.$emit('tableChange', item);
-          //console.log(item);
       }
   },
-  data() {
-      return {
-          entries: [
-              {
-                  name:"电网工程",
-                  index:"1"
-              },
-              {
-                  name:"建筑工程",
-                  index:"2"
-              },
-              {
-                  name:"铁路领域",
-                  index:"3"
-              },
-              {
-                  name:"公路工程",
-                  index:"4"
-              },
-              {
-                  name:"水利工程",
-                  index:"5"
-              },
-              {
-                  name:"民航工程",
-                  index:"6"
-              },
-              {
-                  name:"石油管道",
-                  index:"7"
-              },
-              {
-                  name:"城市轨道",
-                  index:"8"
-              },
-              {
-                  name:"机械制造",
-                  index:"9"
-              }
-          ]
-      }
-  }
 }
 </script>

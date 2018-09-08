@@ -17,16 +17,15 @@ function requireAuth( to, from , next) {
 }
 
 export default new Router({
-  routes: [
+    routes: [
     {
-      path: '/',
-      component: HelloWorld,
-      beforeEnter: requireAuth
+        path: '/',
+        component: HelloWorld,
+        beforeEnter: requireAuth
     },
     {
-      path: '/login',
-      component: Login
+        path: '/login',
+        component: Login
     }
-
-  ]
+    ]
 })
