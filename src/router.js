@@ -7,8 +7,6 @@ Vue.use(Router)
 
 function requireAuth( to, from , next) {
   let token = localStorage.getItem('token');
-  console.log(token);
-  console.log('+++++++++++++++++++++++++++++++++++++++++');
   if(token) {
     next();
   } else {

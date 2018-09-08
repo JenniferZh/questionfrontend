@@ -37,19 +37,51 @@
 </template>
 
 <script>
+  import axiosapi from "../axios.js";
   export default {
     name: "Table",
 
     props: {
       'tabledata': Array,
+      'curscope': String,
     },
 
     methods: {
       handleClickConfirm: function (row) {
-          row.status=1;
+          let params = {"id": row.id, "host_scope": this.curscope, "agree": true}
+          axiosapi.linkConfirm(params).then(response => {
+            if(response.data.code === 0) {
+              row.status=1;
+            } else {
+              this.$notify.error({
+                title: '错误',
+                message: '确认失败'
+              });
+            }
+          }).catch(err => {
+            this.$notify.error({
+              title: '错误',
+              message: '确认失败'
+            });
+          });
       },
       handleClickCancel: function (row) {
-          row.status=0;
+          let params = {"id": row.id, "host_scope": this.curscope, "agree": false}
+          axiosapi.linkConfirm(params).then(response => {
+            if(response.data.code === 0) {
+              row.status = 0;
+            } else {
+              this.$notify.error({
+                title: '错误',
+                message: '取消失败'
+              });
+            }
+          }).catch(err => {
+            this.$notify.error({
+              title: '错误',
+              message: '取消失败'
+            });
+          });
       },
       statusClass: function({row}) {
           if(row.status === 1 ) return "right-row";

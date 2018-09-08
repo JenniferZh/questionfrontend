@@ -37,25 +37,18 @@ export default {
         this.$refs[formName].validate((valid) => {
           if (valid) {
 
-            //alert('submit!');
             axiosapi.postLogin(this.ruleForm2).then((response)=>{
-                console.log(response)
+
                 if(response.data.body.pass) {
-                    // alert('true');
-                    console.log('response')
                     localStorage.setItem("token", response.data.body.token);
-                    console.log(self);
-                    this.$router.push('/')
-                    console.log('response')
-                } else {
-                    alert('false');
+                    this.$router.push('/');
                 }
             }).catch(function(error){
-
-            })
-
-
-
+              this.$notify.error({
+                title: '错误',
+                message: '登陆错误'
+              });
+            });
 
           } else {
             return false;

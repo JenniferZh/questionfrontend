@@ -37,7 +37,7 @@
         </el-form-item>
       </el-form>
       </el-dialog>
-      <Table :tabledata="mdata"></Table>
+      <Table :tabledata="mdata" :curscope="ruleform.region"></Table>
     </el-main>
   </el-container>
 </el-container>
@@ -56,7 +56,7 @@ export default {
   methods: {
     updateTable: function(item) {
       this.ruleform.region = item.name;
-      axiosapi.getTableData(item.name).then(response => (this.mdata = response.data));
+      axiosapi.getTableData(item.name).then(response => (this.mdata = response.data.body));
     },
     addLink: function() {
       this.dialogFormVisible = true;
@@ -70,11 +70,11 @@ export default {
       this.$refs[formName].validate((valid) => {
         console.log(valid);
         if(valid) {
-          
+
           this.dialogFormVisible = false;
           let self = this;
           axiosapi.postAddLink(this.ruleform).then(function(response){
-            if(response.data.code === '200') {
+            if(response.data.code === 0) {
               self.mdata.push(response.data.body);
               self.$notify({
                 title: '成功',
@@ -99,7 +99,7 @@ export default {
           return false;
         }
       });
-      
+
     }
   },
   data() {
@@ -151,7 +151,7 @@ export default {
     }
   },
   mounted() {
-    axiosapi.getTableData("电网工程").then(response => (this.mdata = response.data));
+    axiosapi.getTableData("电网工程").then(response => (this.mdata = response.data.body));
   }
 
 }
