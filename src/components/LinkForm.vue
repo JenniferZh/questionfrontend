@@ -47,7 +47,7 @@ export default {
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-                console.log("test");
+
                 this.$emit("linkCreated", this.addForm);
             } else {
               return false;
