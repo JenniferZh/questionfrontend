@@ -4,7 +4,7 @@ import router from './router.js'
 
 const instance = axios.create({
   baseURL: 'http://localhost:5000/api/',
-  timeout: 1000,
+  timeout: 3000,
 });
 instance.defaults.headers.post['Content-Type'] = 'application/json'
 instance.interceptors.request.use(config => {

@@ -1,10 +1,10 @@
 <template>
   <el-container>
   <el-header>
-    <h3>调查问卷</h3>
+    <h3>多领域关联调查</h3>
     <div>
-      <router-link to="/login">Go to Foo</router-link>
-      <a>导出共享层</a>
+      <router-link to="/login">导出关联</router-link>
+      <router-link to="/login">导出共享层</router-link>
     </div>
   </el-header>
   <el-container class="lowpart">
@@ -170,14 +170,22 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .el-header {
-  background-color: #B3C0D1;
+  background-color: #f5f5f5;
   color: #333;
   line-height: 60px;
   display: flex;
+  align-items: center;
   width: 100%;
   position: fixed;
   z-index: 2;
   justify-content: space-between;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
+  h3 {
+      font-size: 1.2em;
+      color: #2c3e50;
+      font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 500;
+  }
   a {
     margin-left: 30px;
   }
