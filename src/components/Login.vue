@@ -17,6 +17,7 @@
 
 <script>
 import axiosapi from "../axios.js";
+import md5 from 'js-md5';
 export default {
   name: 'Login',
   data() {
@@ -36,14 +37,17 @@ export default {
           // var self = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
+              var requestjson = {};
+              requestjson.account = this.ruleForm2.account;
+              requestjson.password = md5(this.ruleForm2.password);
 
-            axiosapi.postLogin(this.ruleForm2).then((response)=>{
+            axiosapi.postLogin(requestjson).then((response)=>{
 
                 if(response.data.body.pass) {
                     localStorage.setItem("token", response.data.body.token);
                     this.$router.push('/');
                 }
-            }).catch(function(error){
+            }).catch((error) => {
               this.$notify.error({
                 title: '错误',
                 message: '登陆错误'

@@ -38,7 +38,7 @@ export default {
   methods: {
     updateTable: function(item) {
       this.addForm.scope_name_1 = item.name;
-      axiosapi.getTableData(item.name).then(response => (this.mdata = response.data.body));
+      axiosapi.getTableData(item.name).then(response => (this.mdata = response.data.body.data));
     },
     createLink: function(addForm) {
         this.dialogFormVisible = false;
@@ -73,42 +73,6 @@ export default {
       this.addForm.element_name_2 = '';
       this.addForm.scope_name_2 = '';
     },
-    submitForm: function(formName) {
-      console.log(this.$refs[formName]);
-      this.$refs[formName].validate((valid) => {
-        console.log(valid);
-        if(valid) {
-
-          this.dialogFormVisible = false;
-          let self = this;
-          axiosapi.postAddLink(this.ruleform).then(function(response){
-            if(response.data.code === 0) {
-              self.mdata.push(response.data.body);
-              self.$notify({
-                title: '成功',
-                message: '关联已增加',
-                type: 'success'
-              });
-            } else {
-              self.$notify({
-                title: '失败',
-                message: '输入不和要求',
-                type: 'error'
-              });
-            }
-          }).catch(function(error) {
-            self.$notify({
-              title: '失败',
-              message: '访问出错',
-              type: 'error'
-            });
-          });
-        } else {
-          return false;
-        }
-      });
-
-    }
   },
   data() {
     return {
@@ -161,7 +125,7 @@ export default {
     }
   },
   mounted() {
-    axiosapi.getTableData("电网工程").then(response => (this.mdata = response.data.body));
+    axiosapi.getTableData("电网工程").then(response => (this.mdata = response.data.body.data));
   }
 
 }

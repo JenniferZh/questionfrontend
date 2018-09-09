@@ -3,7 +3,7 @@ import router from './router.js'
 
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000/api/',
+  baseURL: 'http://123.207.174.194:50000/',
   timeout: 3000,
 });
 instance.defaults.headers.post['Content-Type'] = 'application/json'
@@ -31,7 +31,7 @@ error => {
 
 export default {
   getTableData(data) {
-    return instance.get('/link/scope/read', {
+    return instance.get('api/link/scope/read', {
       params: {
         scope: data
       }
@@ -39,7 +39,7 @@ export default {
   },
 
   postAddLink(data) {
-    return instance.post('/link/add', data);
+    return instance.post('api/link/add', data);
   },
 
   postLogin(data) {
@@ -47,7 +47,7 @@ export default {
   },
 
   linkConfirm(data) {
-      return instance.post('/link/confirm', data);
+      return instance.post('api/link/confirm', data);
   }
 
 
