@@ -33,13 +33,13 @@ export default {
   getTableData(data) {
     return instance.get('api/link/scope/read', {
       params: {
-        scope: data
+        scope_name: data
       }
     })
   },
 
   postAddLink(data) {
-    return instance.post('api/link/add', data);
+    return instance.post('api/link/create', data);
   },
 
   postLogin(data) {

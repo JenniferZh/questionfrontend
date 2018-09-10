@@ -18,10 +18,14 @@
     <el-table-column
       prop="link_full_name"
       label="相似属性"
-      width="400">
+      width="300">
     </el-table-column>
     <el-table-column
+      prop="status"
       :formatter="formatStatus"
+      :filters="[{text:'已确认', value:'已确认'},{text:'未确认', value:'未确认'}]"
+      :filter-method="filterTag"
+      filter-placement="bottom-end"
       label="状态"
       width="150">
     </el-table-column>
@@ -90,7 +94,10 @@
       formatStatus: function(row) {
           var newStatus = row.status == 1? "已确认":"未确认";
           return newStatus
-      }
+      },
+      filterTag: function(value, row) { 
+        return row.status == 1 && value == "已确认" || row.status == 0 && value == "未确认";
+      },
 
 
     }

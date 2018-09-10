@@ -38,7 +38,11 @@ export default {
   methods: {
     updateTable: function(item) {
       this.addForm.scope_name_1 = item.name;
-      axiosapi.getTableData(item.name).then(response => (this.mdata = response.data.body.data));
+      axiosapi.getTableData(item.name).then((response) => {
+          if(response.data && response.data.body) {
+              this.mdata = response.data.body.data;
+          }
+      });
     },
     createLink: function(addForm) {
         this.dialogFormVisible = false;
@@ -54,7 +58,7 @@ export default {
           } else {
             self.$notify({
               title: '失败',
-              message: '输入不和要求',
+              message: response.data.msg,
               type: 'error'
             });
           }
@@ -125,7 +129,12 @@ export default {
     }
   },
   mounted() {
-    axiosapi.getTableData("电网工程").then(response => (this.mdata = response.data.body.data));
+    axiosapi.getTableData("电网工程").then(response => {
+        if(response.data && response.data.body) {
+            this.mdata = response.data.body.data;
+            //console.log(this.mdata);
+        }
+    });
   }
 
 }
