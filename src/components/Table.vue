@@ -2,6 +2,7 @@
     <el-table
     :data="tabledata"
     :row-class-name="statusClass"
+    v-loading="loading"
     height="800"
     border
     style="width: 100%">
@@ -18,7 +19,12 @@
     <el-table-column
       prop="link_full_name"
       label="相似属性"
-      width="300">
+      width="250">
+    </el-table-column>
+    <el-table-column
+      prop="link_code"
+      label="相似构件编码"
+      width="250">
     </el-table-column>
     <el-table-column
       prop="status"
@@ -27,11 +33,11 @@
       :filter-method="filterTag"
       filter-placement="bottom-end"
       label="状态"
-      width="150">
+      width="100">
     </el-table-column>
     <el-table-column
       label="操作"
-      width="150">
+      width="120">
       <template slot-scope="scope">
         <el-button @click="handleClickConfirm(scope.row)" type="text" size="small">确认</el-button>
         <el-button @click="handleClickCancel(scope.row)" type="text" size="small">取消</el-button>
@@ -48,6 +54,7 @@
     props: {
       'tabledata': Array,
       'curscope': String,
+      'loading': Boolean,
     },
 
     methods: {
@@ -95,7 +102,7 @@
           var newStatus = row.status == 1? "已确认":"未确认";
           return newStatus
       },
-      filterTag: function(value, row) { 
+      filterTag: function(value, row) {
         return row.status == 1 && value == "已确认" || row.status == 0 && value == "未确认";
       },
 

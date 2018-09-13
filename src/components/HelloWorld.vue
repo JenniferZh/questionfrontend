@@ -3,12 +3,12 @@
   <el-header>
     <h3>多领域关联调查</h3>
     <div>
-      <router-link to="/login">导出关联</router-link>
-      <router-link to="/login">导出共享层</router-link>
+      <router-link to="#">导出关联</router-link>
+      <router-link to="#">导出共享层</router-link>
     </div>
   </el-header>
   <el-container class="lowpart">
-    <el-aside width="300px">
+    <el-aside width="200px">
       <NavMenu v-on:tableChange="updateTable" :entries="scopes"></NavMenu>
     </el-aside>
     <el-main>
@@ -17,7 +17,7 @@
           <el-dialog title="新建关联" :visible.sync="dialogFormVisible">
             <LinkForm :scopes="scopes" :addForm="addForm" v-on:linkCreated="createLink"></LinkForm>
           </el-dialog>
-      <Table :tabledata="mdata" :curscope="addForm.scope_name_1"></Table>
+      <Table :tabledata="mdata" :curscope="addForm.scope_name_1" :loading="loading"></Table>
     </el-main>
   </el-container>
 </el-container>
@@ -37,11 +37,15 @@ export default {
   },
   methods: {
     updateTable: function(item) {
+        this.loading = true;  
       this.addForm.scope_name_1 = item.name;
       axiosapi.getTableData(item.name).then((response) => {
           if(response.data && response.data.body) {
               this.mdata = response.data.body.data;
+              this.loading = false;
           }
+      }).catch((err) => {
+          this.loading = false;
       });
     },
     createLink: function(addForm) {
@@ -58,7 +62,7 @@ export default {
           } else {
             self.$notify({
               title: '失败',
-              message: response.data.msg,
+              message: '请检查输入构件是否存在/输入关联是否重复',
               type: 'error'
             });
           }
@@ -80,6 +84,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       dialogFormVisible: false,
       addForm: {
           scope_name_1:'电网工程',
@@ -132,8 +137,11 @@ export default {
     axiosapi.getTableData("电网工程").then(response => {
         if(response.data && response.data.body) {
             this.mdata = response.data.body.data;
+            this.loading = false;
             //console.log(this.mdata);
         }
+    }).catch((err) => {
+        this.loading = false;
     });
   }
 

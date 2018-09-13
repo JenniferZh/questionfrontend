@@ -3,7 +3,7 @@ import router from './router.js'
 
 
 const instance = axios.create({
-  baseURL: 'http://123.207.174.194:50000/',
+  baseURL: 'http://cbims.org.cn:50000/',
   timeout: 3000,
 });
 instance.defaults.headers.post['Content-Type'] = 'application/json'
