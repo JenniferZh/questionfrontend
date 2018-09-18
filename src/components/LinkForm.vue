@@ -3,7 +3,7 @@
         <el-form-item label="本领域" prop="scope_name_1">
             <el-select v-model="addForm.scope_name_1" disabled></el-select>
         </el-form-item>
-        <el-form-item label="本领域构件名称" prop="element_name_1">
+        <el-form-item label="本领域对象名称" prop="element_name_1">
             <el-input v-model="addForm.element_name_1"></el-input>
         </el-form-item>
         <el-form-item label="关联领域" prop="scope_name_2">
@@ -11,7 +11,7 @@
                 <el-option v-for="item in scopesExcept" :label="item.name" :value="item.name" :key="item.name"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="关联领域构件名称" prop="element_name_2">
+        <el-form-item label="关联领域对象名称" prop="element_name_2">
             <el-input v-model="addForm.element_name_2"></el-input>
         </el-form-item>
         <el-form-item>
@@ -47,7 +47,6 @@ export default {
         submitForm(formName) {
           this.$refs[formName].validate((valid) => {
             if (valid) {
-
                 this.$emit("linkCreated", this.addForm);
             } else {
               return false;

@@ -18,12 +18,12 @@
     </el-table-column>
     <el-table-column
       prop="link_full_name"
-      label="相似属性"
+      label="相似对象"
       width="250">
     </el-table-column>
     <el-table-column
       prop="link_code"
-      label="相似构件编码"
+      label="相似对象编码"
       width="250">
     </el-table-column>
     <el-table-column
