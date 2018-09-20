@@ -81,14 +81,35 @@ export default {
       this.addForm.element_name_2 = '';
       this.addForm.scope_name_2 = '';
     },
+    blobToString: function(b) {
+        var u, x;
+        u = URL.createObjectURL(b);
+        x = new XMLHttpRequest();
+        x.open('GET', u, false); // although sync, you're not fetching over internet
+        x.send();
+        URL.revokeObjectURL(u);
+        return x.responseText;
+    },
     downloadlink: function() {
         axiosapi.getlinkFile().then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'links.json');
-            document.body.appendChild(link);
-            link.click();
+            //console.log(response.data.size);
+            if(response.data.size === 53) {
+                //console.log(response.data.code);
+                this.$notify({
+                  title: '下载失败',
+                  message: '无下载权限',
+                  type: 'error'
+                });
+
+            } else {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'links.json');
+                document.body.appendChild(link);
+                link.click();
+            }
+
         }).catch(() => {
             this.$notify({
               title: '下载失败',
@@ -99,12 +120,23 @@ export default {
     },
     downloadelement: function() {
         axiosapi.getElementFile().then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'elements.json');
-            document.body.appendChild(link);
-            link.click();
+            //console.log(this.blobToString(response.data));
+            if(response.data.size === 53) {
+                //console.log(response.data.code);
+                this.$notify({
+                  title: '下载失败',
+                  message: '无下载权限',
+                  type: 'error'
+                });
+
+            } else {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'elements.json');
+                document.body.appendChild(link);
+                link.click();
+            }
         }).catch(() => {
             this.$notify({
               title: '下载失败',
