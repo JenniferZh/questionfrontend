@@ -1,10 +1,10 @@
 <template>
   <el-container>
   <el-header>
-    <h3>多领域关联调查</h3>
+    <h3>多领域数据映射</h3>
     <div>
-      <router-link to="#">导出关联</router-link>
-      <router-link to="#">导出共享层</router-link>
+      <span @click="downloadlink">导出关联</span>
+      <span @click="downloadelement">导出共享层</span>
     </div>
   </el-header>
   <el-container class="lowpart">
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     updateTable: function(item) {
-        this.loading = true;  
+        this.loading = true;
       this.addForm.scope_name_1 = item.name;
       axiosapi.getTableData(item.name).then((response) => {
           if(response.data && response.data.body) {
@@ -81,6 +81,38 @@ export default {
       this.addForm.element_name_2 = '';
       this.addForm.scope_name_2 = '';
     },
+    downloadlink: function() {
+        axiosapi.getlinkFile().then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'links.json');
+            document.body.appendChild(link);
+            link.click();
+        }).catch(() => {
+            this.$notify({
+              title: '下载失败',
+              message: '网络错误或权限不足',
+              type: 'error'
+            });
+        });
+    },
+    downloadelement: function() {
+        axiosapi.getElementFile().then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'elements.json');
+            document.body.appendChild(link);
+            link.click();
+        }).catch(() => {
+            this.$notify({
+              title: '下载失败',
+              message: '网络错误或权限不足',
+              type: 'error'
+            });
+        });
+    }
   },
   data() {
     return {
@@ -167,8 +199,11 @@ export default {
       font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
       font-weight: 500;
   }
-  a {
+  span {
     margin-left: 30px;
+  }
+  span:hover {
+      cursor: pointer;
   }
 }
 

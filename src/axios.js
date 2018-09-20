@@ -3,7 +3,7 @@ import router from './router.js'
 
 
 const instance = axios.create({
-  baseURL: 'http://cbims.org.cn:50000/',
+  baseURL: 'http://prettyorange.cn:50000/',
   timeout: 3000,
 });
 instance.defaults.headers.post['Content-Type'] = 'application/json'
@@ -48,6 +48,18 @@ export default {
 
   linkConfirm(data) {
       return instance.post('api/link/confirm', data);
+  },
+
+  getlinkFile() {
+      return instance.get('api/download/links',{
+          responseType: 'blob'
+      });
+  },
+
+  getElementFile() {
+      return instance.get('api/download/elements', {
+          responseType: 'blob'
+      })
   }
 
 
